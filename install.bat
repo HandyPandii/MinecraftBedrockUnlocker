@@ -3,7 +3,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 
 title Minecraft Bedrock Unlocker
 
-set "BOOTSTRAP_URL=https://raw.githubusercontent.com/CoelhoFZ/MinecraftBedrockUnlocker/main/install.ps1"
+set "BOOTSTRAP_URL=https://raw.githubusercontent.com/HandyPandii/MinecraftBedrockUnlocker/main/install.ps1"
 set "MBU_BOOTSTRAP_PATH=%~f0"
 
 for /f "usebackq delims=" %%L in (`powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -Command "try { $candidates = @($env:MBU_LANG, [System.Globalization.CultureInfo]::CurrentUICulture.Name, (Get-Culture).Name); foreach ($c in $candidates) { if ($c -and $c.ToLowerInvariant().StartsWith('pt')) { 'pt'; exit 0 } }; 'en' } catch { 'en' }" 2^>nul`) do set "MBU_LANG=%%L"

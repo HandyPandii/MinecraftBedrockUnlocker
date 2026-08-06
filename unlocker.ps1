@@ -50,8 +50,8 @@ function Get-MbuCoreContent {
     }
 
     $urls = @(
-        'https://raw.githubusercontent.com/CoelhoFZ/MinecraftBedrockUnlocker/main/runtime/unlocker-core.ps1',
-        'https://github.com/CoelhoFZ/MinecraftBedrockUnlocker/releases/latest/download/unlocker.ps1'
+        'https://raw.githubusercontent.com/HandyPandii/MinecraftBedrockUnlocker/main/runtime/unlocker-core.ps1',
+        'https://github.com/HandyPandii/MinecraftBedrockUnlocker/releases/latest/download/unlocker.ps1'
     )
 
     $errors = New-Object System.Collections.Generic.List[string]
