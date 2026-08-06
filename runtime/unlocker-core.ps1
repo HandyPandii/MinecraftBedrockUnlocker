@@ -3211,6 +3211,11 @@ function Test-InstalledFileIntegrity {
 
         if ($SourceName -match '\.dll$' -and -not (Test-PE64File -Path $FilePath)) { return $false }
 
+        # OnlineFix.ini is runtime state that gets rewritten on first run, so
+        # its hash is not stable. Only require it to exist and be non-empty
+        # (already checked above). Skip the hash check for it.
+        if ($SourceName -ieq 'OnlineFix.ini') { return $true }
+
         if ($ExpectedHash) {
             $actualHash = Get-FileSha256Hex -Path $FilePath
             if (-not $actualHash -or $actualHash -ne $ExpectedHash.ToLowerInvariant()) { return $false }
@@ -4445,8 +4450,9 @@ function Install-Bypass {
                         $sha256 = [System.Security.Cryptography.SHA256]::Create()
                         $hashBytes = $sha256.ComputeHash($fileBytes)
                         $actualHash = -join ($hashBytes | ForEach-Object { $_.ToString("x2") })
-                        # For dlllist.txt, skip hash check (content is patched with safe name)
-                        if ($file.Name -ne "dlllist.txt" -and $actualHash -ne $file.Hash) {
+                        # For dlllist.txt, skip hash check (content is patched with safe name).
+                        # For OnlineFix.ini, skip hash check (runtime state, rewritten on first run).
+                        if ($file.Name -ne "dlllist.txt" -and $file.Name -ne "OnlineFix.ini" -and $actualHash -ne $file.Hash) {
                             $hashMismatch += $diskName
                         }
                     } catch { }
